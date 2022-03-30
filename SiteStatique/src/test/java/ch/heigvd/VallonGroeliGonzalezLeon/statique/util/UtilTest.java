@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +21,7 @@ class UtilTest {
    private final File buildDirectory = new File(currentDirectory.getPath() + "/build");
 
    UtilTest() throws IOException {}
+
 
    @BeforeEach
    void setUp() {
@@ -34,7 +33,6 @@ class UtilTest {
    void tearDown() throws IOException {
       FileUtils.deleteDirectory(currentDirectory);
    }
-
 
    @Test
    void testWritingFileWorks() throws IOException {
@@ -88,14 +86,4 @@ class UtilTest {
                    Util.readFile(new BufferedReader(new InputStreamReader(new FileInputStream(jpgImageBuild)))));
    }
 
-   @Test
-   void testGeneratePathInBuildDirectory(){
-      Path pathFrom = Paths.get("/C/TEST/BASE/DIRECTORY/");
-      Path pathFromFile = Paths.get("/C/TEST/BASE/DIRECTORY/FILE/TO/COPY");
-      assertEquals(Paths.get("/C/TEST/BASE/DIRECTORY/build/FILE/TO/COPY"),
-              Util.generatePathInBuildDirectory(pathFrom, pathFromFile));
-      File testFile = new File(currentDirectory.getPath()+"/test/FILE/truc.txt");
-      assertEquals(Paths.get(buildDirectory.toPath() + "/test/FILE/truc.txt"),
-                   Util.generatePathInBuildDirectory(currentDirectory.toPath(),testFile.toPath()));
-   }
 }
